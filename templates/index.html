@@ -8,11 +8,11 @@
         <!-- Hero Section -->
         <div class="card bg-dark text-white mb-4 shadow-lg hero-card">
             <div class="card-body p-5 text-center">
-                <h1 class="display-5 fw-bold mb-3">Amazon Ürün Veri Analizi</h1>
-                <p class="lead mb-4">Gelişmiş veri kazıma ve analiz teknolojileriyle Amazon ürünlerini hızlıca araştırın, analiz edin ve rekabet avantajı sağlayın</p>
+                <h1 class="display-5 fw-bold mb-3">Amazon Product Data Analysis</h1>
+                <p class="lead mb-4">Advanced data scraping and analysis technologies to quickly search, analyze, and gain a competitive edge on Amazon products</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                     <a href="#search-form" class="btn btn-primary btn-lg px-4 gap-3">
-                        <i class="fas fa-search me-2"></i>Şimdi Başla
+                        <i class="fas fa-search me-2"></i>Start Now
                     </a>
                 </div>
             </div>
@@ -21,41 +21,41 @@
         <!-- Search Form -->
         <div id="search-form" class="card shadow mb-4 border-0">
             <div class="card-header bg-primary bg-gradient text-white">
-                <h3 class="mb-0"><i class="fas fa-search me-2"></i>Amazon Ürün Arama</h3>
+                <h3 class="mb-0"><i class="fas fa-search me-2"></i>Amazon Product Search</h3>
             </div>
             <div class="card-body p-4">
                 <form method="POST" action="{{ url_for('search') }}">
                     <div class="mb-4">
-                        <label for="search_term" class="form-label fw-bold">Ürün Arama Terimi</label>
+                        <label for="search_term" class="form-label fw-bold">Product Search Term</label>
                         <div class="input-group input-group-lg">
                             <span class="input-group-text bg-light">
                                 <i class="fas fa-tag"></i>
                             </span>
-                            <input type="text" class="form-control shadow-none" id="search_term" name="search_term" placeholder="örn. laptop, kulaklık, airfryer" required>
+                            <input type="text" class="form-control shadow-none" id="search_term" name="search_term" placeholder="e.g. laptop, headphones, airfryer" required>
                         </div>
-                        <div class="form-text text-muted">Amazon'da aramak istediğiniz ürünü girin</div>
+                        <div class="form-text text-muted">Enter the product you want to search for on Amazon</div>
                     </div>
                     
                     <div class="mb-4">
-                        <label for="num_pages" class="form-label fw-bold">Taranacak Sayfa Sayısı</label>
+                        <label for="num_pages" class="form-label fw-bold">Number of Pages to Scrape</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light">
                                 <i class="fas fa-file-alt"></i>
                             </span>
                             <select class="form-select shadow-none" id="num_pages" name="num_pages">
-                                <option value="1">1 sayfa (~20 ürün)</option>
-                                <option value="2">2 sayfa (~40 ürün)</option>
-                                <option value="3" selected>3 sayfa (~60 ürün)</option>
-                                <option value="5">5 sayfa (~100 ürün)</option>
-                                <option value="10">10 sayfa (~200 ürün)</option>
+                                <option value="1">1 page (~20 products)</option>
+                                <option value="2">2 pages (~40 products)</option>
+                                <option value="3" selected>3 pages (~60 products)</option>
+                                <option value="5">5 pages (~100 products)</option>
+                                <option value="10">10 pages (~200 products)</option>
                             </select>
                         </div>
-                        <div class="form-text text-muted">Daha fazla sayfa = daha fazla veri ama daha yavaş işlem</div>
+                        <div class="form-text text-muted">More pages = more data but slower processing</div>
                     </div>
                     
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-search me-2"></i>Ara ve Analiz Et
+                            <i class="fas fa-search me-2"></i>Search and Analyze
                         </button>
                     </div>
                 </form>
@@ -70,8 +70,8 @@
                         <div class="feature-icon mb-3">
                             <i class="fas fa-robot fa-2x text-primary"></i>
                         </div>
-                        <h5 class="card-title">Otomatik Veri Kazıma</h5>
-                        <p class="card-text">Gelişmiş algoritmalar ile Amazon'dan ürün verileri otomatik olarak toplanır</p>
+                        <h5 class="card-title">Automatic Data Scraping</h5>
+                        <p class="card-text">Advanced algorithms automatically collect product data from Amazon</p>
                     </div>
                 </div>
             </div>
@@ -81,8 +81,8 @@
                         <div class="feature-icon mb-3">
                             <i class="fas fa-chart-pie fa-2x text-success"></i>
                         </div>
-                        <h5 class="card-title">Veri Görselleştirme</h5>
-                        <p class="card-text">Detaylı grafikler ve analizlerle karmaşık veri setlerini anlaşılır hale getirir</p>
+                        <h5 class="card-title">Data Visualization</h5>
+                        <p class="card-text">Detailed graphs and analyses make complex data sets understandable</p>
                     </div>
                 </div>
             </div>
@@ -92,8 +92,8 @@
                         <div class="feature-icon mb-3">
                             <i class="fas fa-brain fa-2x text-warning"></i>
                         </div>
-                        <h5 class="card-title">Akıllı Analiz</h5>
-                        <p class="card-text">Pazar trendlerini ve ürün segmentasyonunu ortaya çıkaran gelişmiş analiz araçları</p>
+                        <h5 class="card-title">Smart Analysis</h5>
+                        <p class="card-text">Advanced tools that reveal market trends and product segmentation</p>
                     </div>
                 </div>
             </div>
@@ -102,21 +102,21 @@
         <!-- Information Card -->
         <div class="card shadow border-0 mb-4">
             <div class="card-header bg-info bg-gradient text-white">
-                <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>Bu Araç Hakkında</h4>
+                <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>About This Tool</h4>
             </div>
             <div class="card-body p-4">
-                <p class="lead">Bu web uygulaması, Amazon'daki ürünleri arayıp sonuçlar üzerinde kapsamlı analizler yapmanıza olanak tanır:</p>
+                <p class="lead">This web application allows you to search for products on Amazon and perform comprehensive analyses on the results:</p>
                 
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex">
                                 <span class="me-3"><i class="fas fa-check-circle text-success"></i></span>
-                                <span>Belirlediğiniz ürünleri Amazon'da arar</span>
+                                <span>Searches for the products you specify on Amazon</span>
                             </li>
                             <li class="list-group-item d-flex">
                                 <span class="me-3"><i class="fas fa-check-circle text-success"></i></span>
-                                <span>Fiyat, derecelendirme ve inceleme sayılarını toplar</span>
+                                <span>Collects price, rating, and review counts</span>
                             </li>
                         </ul>
                     </div>
@@ -124,11 +124,11 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex">
                                 <span class="me-3"><i class="fas fa-check-circle text-success"></i></span>
-                                <span>Verileri analiz ederek anlamlı görselleştirmeler üretir</span>
+                                <span>Analyzes data to produce meaningful visualizations</span>
                             </li>
                             <li class="list-group-item d-flex">
                                 <span class="me-3"><i class="fas fa-check-circle text-success"></i></span>
-                                <span>Sonuçları interaktif bir gösterge panelinde sunar</span>
+                                <span>Displays results in an interactive dashboard</span>
                             </li>
                         </ul>
                     </div>
@@ -140,8 +140,8 @@
                             <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
                         </div>
                         <div>
-                            <h5 class="alert-heading">Önemli Bilgi</h5>
-                            <p class="mb-0">Bu araç yalnızca eğitim ve araştırma amaçlıdır. Lütfen sorumlu bir şekilde kullanın ve Amazon'un hizmet şartlarına saygı gösterin.</p>
+                            <h5 class="alert-heading">Important Information</h5>
+                            <p class="mb-0">This tool is only for educational and research purposes. Please use responsibly and respect Amazon's terms of service.</p>
                         </div>
                     </div>
                 </div>

@@ -79,7 +79,7 @@ def job_status(job_id):
     """Show job status and results when completed"""
     with jobs_lock:
         if job_id not in active_jobs:
-            flash('İş bulunamadı. Sunucu yeniden başlatıldıysa işiniz silinmiş olabilir. Lütfen yeni bir arama yapın.', 'warning')
+            flash('Job not found. If the server was restarted, your job may have been deleted. Please make a new search.', 'warning')
             return redirect(url_for('index'))
         
         job_info = active_jobs[job_id]

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Mevcut Veri Dosyaları - Amazon Scraper{% endblock %}
+{% block title %}Existing Data Files - Amazon Scraper{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -8,11 +8,11 @@
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0"><i class="fas fa-database me-2"></i>Mevcut Veri Dosyaları</h3>
+                    <h3 class="mb-0"><i class="fas fa-database me-2"></i>Existing Data Files</h3>
                 </div>
                 <div class="card-body">
                     {% if csv_files %}
-                        <p class="mb-3">Aşağıdaki CSV dosyalarından birini analiz etmek için seçin:</p>
+                        <p class="mb-3">Select one of the following CSV files to analyze:</p>
                         <div class="list-group">
                             {% for file in csv_files %}
                                 <a href="{{ url_for('analyze_csv', filename=file) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -20,19 +20,19 @@
                                         <i class="fas fa-file-csv me-2 text-primary"></i>
                                         {{ file }}
                                     </div>
-                                    <span class="badge bg-primary rounded-pill">Analiz Et</span>
+                                    <span class="badge bg-primary rounded-pill">Analyze</span>
                                 </a>
                             {% endfor %}
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>Henüz hiç CSV dosyası yüklenmemiş. Veri toplamak için bir arama yapın.
+                            <i class="fas fa-info-circle me-2"></i>No CSV files have been uploaded yet. Search for data to analyze.
                         </div>
                     {% endif %}
                 </div>
                 <div class="card-footer">
                     <a href="{{ url_for('index') }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>Ana Sayfaya Dön
+                        <i class="fas fa-arrow-left me-2"></i>Back to Home
                     </a>
                 </div>
             </div>
