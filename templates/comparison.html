@@ -1,0 +1,240 @@
+{% extends "layout.html" %}
+
+{% block title %}Product Comparison: {{ product1 }} vs {{ product2 }}{% endblock %}
+
+{% block head %}
+<style>
+    .comparison-header {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .comparison-card {
+        height: 100%;
+        transition: all 0.3s;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .comparison-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .vs-badge {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 auto;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    
+    .product-card {
+        border: none;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    .sentiment-badge {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 10px;
+    }
+    
+    .sentiment-positive {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #28a745;
+    }
+    
+    .sentiment-neutral {
+        background-color: rgba(108, 117, 125, 0.2);
+        color: #6c757d;
+    }
+    
+    .sentiment-negative {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Comparison Header -->
+<div class="comparison-header shadow">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="mb-2"><i class="fas fa-balance-scale me-3"></i>Product Comparison</h1>
+                <p class="lead mb-0">
+                    Comparing web insights and sentiment analysis for both products
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <a href="#" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#compareProductsModal">
+                    <i class="fas fa-search me-2"></i>New Comparison
+                </a>
+                <a href="{{ url_for('index') }}" class="btn btn-light">
+                    <i class="fas fa-home me-2"></i>Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Title Cards -->
+<div class="row mb-4 align-items-center">
+    <div class="col-md-5">
+        <div class="card bg-primary text-white text-center comparison-card">
+            <div class="card-body py-4">
+                <h3 class="card-title mb-0">{{ product1 }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 d-flex justify-content-center my-3 my-md-0">
+        <div class="vs-badge">VS</div>
+    </div>
+    <div class="col-md-5">
+        <div class="card bg-info text-white text-center comparison-card">
+            <div class="card-body py-4">
+                <h3 class="card-title mb-0">{{ product2 }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sentiment Overview -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Sentiment Overview</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% set keyword_data = comparison.keywords %}
+                    {% set p1_positive = 0 %}
+                    {% set p1_neutral = 0 %}
+                    {% set p1_negative = 0 %}
+                    {% set p2_positive = 0 %}
+                    {% set p2_neutral = 0 %}
+                    {% set p2_negative = 0 %}
+                    
+                    {% for keyword in keyword_data %}
+                        {% set combined_text = (keyword.title + ' ' + keyword.snippet) | lower %}
+                        {% set p1_text = product1 | lower %}
+                        {% set p2_text = product2 | lower %}
+                        
+                        {% if p1_text in combined_text %}
+                            {% if keyword.sentiment == 'positive' %}
+                                {% set p1_positive = p1_positive + 1 %}
+                            {% elif keyword.sentiment == 'negative' %}
+                                {% set p1_negative = p1_negative + 1 %}
+                            {% else %}
+                                {% set p1_neutral = p1_neutral + 1 %}
+                            {% endif %}
+                        {% endif %}
+                        
+                        {% if p2_text in combined_text %}
+                            {% if keyword.sentiment == 'positive' %}
+                                {% set p2_positive = p2_positive + 1 %}
+                            {% elif keyword.sentiment == 'negative' %}
+                                {% set p2_negative = p2_negative + 1 %}
+                            {% else %}
+                                {% set p2_neutral = p2_neutral + 1 %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <div class="col-md-6">
+                        <h5 class="text-primary text-center mb-4">{{ product1 }}</h5>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-success">{{ p1_positive }}</div>
+                                <div class="mt-2">Positive</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-secondary">{{ p1_neutral }}</div>
+                                <div class="mt-2">Neutral</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-danger">{{ p1_negative }}</div>
+                                <div class="mt-2">Negative</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5 class="text-info text-center mb-4">{{ product2 }}</h5>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-success">{{ p2_positive }}</div>
+                                <div class="mt-2">Positive</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-secondary">{{ p2_neutral }}</div>
+                                <div class="mt-2">Neutral</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="display-5 fw-bold text-danger">{{ p2_negative }}</div>
+                                <div class="mt-2">Negative</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Results -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-search me-2"></i>Comparison Results</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for keyword in comparison.keywords[:10] %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 product-card shadow-sm">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0 text-truncate">{{ keyword.title }}</h6>
+                                    <span class="sentiment-badge sentiment-{{ keyword.sentiment }}">
+                                        {{ keyword.sentiment|capitalize }}
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ keyword.snippet }}</p>
+                                    <a href="{{ keyword.source }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        Visit Source <i class="fas fa-external-link-alt ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Additional JavaScript if needed
+    });
+</script>
+{% endblock %} 

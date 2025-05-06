@@ -1,0 +1,128 @@
+{
+  "timestamp": "2025-05-06T13:21:43.767434",
+  "summary": {
+    "total_products": 144,
+    "average_price": 2135.115208333333,
+    "average_rating": 2.0458333333333334,
+    "total_reviews": 0
+  },
+  "price_analysis": {
+    "min": 0.0,
+    "max": 5599.0,
+    "mean": 2135.115208333333,
+    "median": 2044.0,
+    "std_dev": 1599.4484107306391,
+    "price_ranges": {
+      "ranges": [
+        "<$25",
+        "$25-$50",
+        "$50-$100",
+        "$100-$200",
+        "$200-$500",
+        "$500-$1000",
+        ">$1000"
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        9,
+        105
+      ]
+    }
+  },
+  "rating_analysis": {
+    "min": 0.0,
+    "max": 5.0,
+    "mean": 2.0458333333333334,
+    "median": 0.0,
+    "std_dev": 2.3577539092330007,
+    "distribution": {
+      "ratings": [
+        0.0,
+        2.5,
+        4.5,
+        5.0
+      ],
+      "counts": [
+        81,
+        3,
+        18,
+        42
+      ]
+    }
+  },
+  "review_analysis": {
+    "min": 0,
+    "max": 0,
+    "mean": 0.0,
+    "median": 0.0,
+    "std_dev": 0.0,
+    "total": 0,
+    "distribution": {
+      "ranges": [
+        "0-10"
+      ],
+      "counts": [
+        0
+      ]
+    }
+  },
+  "title_analysis": {
+    "top_words": [
+      {
+        "apple": 18
+      },
+      {
+        "core": 18
+      },
+      {
+        "pro": 15
+      },
+      {
+        "macbook": 9
+      },
+      {
+        "inch": 9
+      },
+      {
+        "chip": 9
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "gpu": 9
+      },
+      {
+        "unified": 9
+      },
+      {
+        "memory": 9
+      },
+      {
+        "silver": 6
+      },
+      {
+        "max": 3
+      },
+      {
+        "space": 3
+      },
+      {
+        "black": 3
+      }
+    ],
+    "average_sentiment": -0.05555555555555555,
+    "positive_titles": 0,
+    "neutral_titles": 9,
+    "negative_titles": 0
+  },
+  "correlations": {
+    "price_vs_rating": 0.13052145834555812,
+    "price_vs_reviews": NaN,
+    "rating_vs_reviews": NaN
+  }
+}

@@ -43,6 +43,11 @@
                             <i class="fas fa-database me-1"></i>Existing Data
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#compareProductsModal">
+                            <i class="fas fa-balance-scale me-1"></i>Compare Products
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -109,5 +114,44 @@
     </script>
     
     {% block scripts %}{% endblock %}
+
+    <!-- Compare Products Modal -->
+    <div class="modal fade" id="compareProductsModal" tabindex="-1" aria-labelledby="compareProductsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="compareProductsModalLabel">
+                        <i class="fas fa-balance-scale me-2"></i>Compare Products
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">Compare any two products to get insights from across the web.</p>
+                    <form action="{{ url_for('compare_products') }}" method="post" id="compareForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="product1" class="form-label">First Product</label>
+                                <input type="text" class="form-control" id="product1" name="product1" required placeholder="e.g. MacBook Air M2">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product2" class="form-label">Second Product</label>
+                                <input type="text" class="form-control" id="product2" name="product2" required placeholder="e.g. Dell XPS 13">
+                            </div>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Powered by Serper API, this comparison will analyze web sentiment, reviews, and news for both products.
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="compareForm" class="btn btn-primary">
+                        <i class="fas fa-search me-2"></i>Compare
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

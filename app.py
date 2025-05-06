@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 from modules.scraper import AmazonScraper
 from modules.analyzer import AmazonAnalyzer
 from modules.dashboard import generate_dashboard_data
+from modules.serper_api import SerperAPI, format_insights
 
 app = Flask(__name__)
 app.secret_key = 'amazon_scraper_secret_key'  # Change this to a random string for security
@@ -20,6 +21,7 @@ app.secret_key = 'amazon_scraper_secret_key'  # Change this to a random string f
 # Configure application
 app.config['UPLOAD_FOLDER'] = 'data/raw'
 app.config['RESULTS_FOLDER'] = 'data/processed'
+app.config['SERPER_API_KEY'] = '888c639629fb510aceba71ba76270ee5ad8c8739'
 
 # Create necessary folders
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -29,6 +31,9 @@ os.makedirs(app.config['RESULTS_FOLDER'], exist_ok=True)
 active_jobs = {}
 # Add a lock for thread safety
 jobs_lock = threading.Lock()
+
+# Initialize Serper API
+serper_api = SerperAPI(app.config['SERPER_API_KEY'])
 
 @app.route('/')
 def index():
@@ -421,6 +426,114 @@ def upload_csv():
         return redirect(url_for('analyze_csv', filename=filename))
     else:
         flash('Invalid file type. Please upload a CSV file.', 'danger')
+        return redirect(url_for('index'))
+
+@app.route('/web-insights/<job_id>')
+def web_insights(job_id):
+    """Display web insights for a completed job"""
+    with jobs_lock:
+        if job_id not in active_jobs or active_jobs[job_id]['status'] != 'completed':
+            flash('Analysis not ready or job not found', 'warning')
+            return redirect(url_for('job_status', job_id=job_id))
+        
+        job_info = dict(active_jobs[job_id])
+    
+    # Get product name from job info
+    product_name = job_info['search_term']
+    
+    try:
+        # Check if insights are already cached
+        insights_file = os.path.join(app.config['RESULTS_FOLDER'], f"{job_id}_web_insights.json")
+        
+        if os.path.exists(insights_file):
+            # Load cached insights
+            with open(insights_file, 'r') as f:
+                web_insights = json.load(f)
+        else:
+            # Get web insights
+            raw_insights = serper_api.get_product_insights(product_name, num_results=10)
+            
+            # Format insights for display
+            web_insights = format_insights(raw_insights)
+            
+            # Cache the insights
+            with open(insights_file, 'w') as f:
+                json.dump(web_insights, f, indent=2)
+        
+        # Get analysis results for the dashboard
+        result_file = os.path.join(app.config['RESULTS_FOLDER'], f"{job_id}_analysis.json")
+        if not os.path.exists(result_file):
+            flash('Analysis results not found', 'danger')
+            return redirect(url_for('job_status', job_id=job_id))
+        
+        with open(result_file, 'r') as f:
+            analysis_results = json.load(f)
+        
+        # Generate dashboard data
+        dashboard_data = generate_dashboard_data(analysis_results)
+        
+        return render_template('web_insights.html', 
+                              job_id=job_id, 
+                              job_info=job_info,
+                              dashboard_data=dashboard_data,
+                              web_insights=web_insights)
+    
+    except Exception as e:
+        flash(f'Error fetching web insights: {str(e)}', 'danger')
+        return redirect(url_for('dashboard', job_id=job_id))
+
+@app.route('/compare-products', methods=['POST'])
+def compare_products():
+    """Compare two products using Serper API"""
+    product1 = request.form.get('product1', '')
+    product2 = request.form.get('product2', '')
+    
+    if not product1 or not product2:
+        flash('Please enter both product names', 'warning')
+        return redirect(url_for('index'))
+    
+    try:
+        # Get comparison data
+        comparison = serper_api.compare_products(product1, product2)
+        
+        # Cache the comparison
+        cache_file = os.path.join(app.config['RESULTS_FOLDER'], f"comparison_{product1}_{product2}.json".replace(' ', '_'))
+        with open(cache_file, 'w') as f:
+            json.dump(comparison, f, indent=2)
+        
+        # Redirect to comparison view
+        return redirect(url_for('view_comparison', product1=product1, product2=product2))
+    
+    except Exception as e:
+        flash(f'Error comparing products: {str(e)}', 'danger')
+        return redirect(url_for('index'))
+
+@app.route('/comparison/<product1>/<product2>')
+def view_comparison(product1, product2):
+    """View product comparison results"""
+    try:
+        # Load cached comparison data
+        cache_file = os.path.join(app.config['RESULTS_FOLDER'], f"comparison_{product1}_{product2}.json".replace(' ', '_'))
+        
+        if not os.path.exists(cache_file):
+            # If not cached, generate new comparison
+            comparison = serper_api.compare_products(product1, product2)
+            
+            # Cache the comparison
+            with open(cache_file, 'w') as f:
+                json.dump(comparison, f, indent=2)
+        else:
+            # Load from cache
+            with open(cache_file, 'r') as f:
+                comparison = json.load(f)
+        
+        return render_template('comparison.html',
+                              product1=product1,
+                              product2=product2,
+                              comparison=comparison)
+    
+    except Exception as e:
+        flash(f'Error loading comparison data: {str(e)}', 'danger')
         return redirect(url_for('index'))
 
 if __name__ == '__main__':

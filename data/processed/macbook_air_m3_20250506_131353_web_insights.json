@@ -1,0 +1,77 @@
+{
+  "top_sources": [
+    {
+      "title": "MacBook Air 13-inch and MacBook Air 15-inch - Apple",
+      "link": "https://www.apple.com/macbook-air/",
+      "source": "www.apple.com",
+      "snippet": "A new color is in the air. \u00b7 Sky Blue \u00b7 Silver \u00b7 Starlight \u00b7 Midnight."
+    },
+    {
+      "title": "MacBook Air 13-inch Laptop - M3 chip Built for Apple Intelligence ...",
+      "link": "https://www.bestbuy.com/site/apple-macbook-air-13-inch-laptop-m3-chip-built-for-apple-intelligence-8gb-memory-256gb-ssd-midnight/6565837.p?skuId=6565837",
+      "source": "www.bestbuy.com",
+      "snippet": "The new MacBook Air with the M3 chip is a game-changer! The performance is lightning-fast, even when multitasking or running demanding apps. The 13.3\" Retina ..."
+    },
+    {
+      "title": "Regret buying M3 MacBook Air\u2026 : r/macbookair - Reddit",
+      "link": "https://www.reddit.com/r/macbookair/comments/1idxlcp/regret_buying_m3_macbook_air/",
+      "source": "www.reddit.com",
+      "snippet": "Processor is a little bit quicker, battery life is a bit better, more ram options, and center stage for the webcam, everything else is the same."
+    },
+    {
+      "title": "MacBook Air (13-inch, M3, 2024) - Tech Specs - Apple Support",
+      "link": "https://support.apple.com/en-la/118551",
+      "source": "support.apple.com",
+      "snippet": "Chip. Apple M3 chip. 8-core CPU with 4 performance cores and 4 efficiency cores. 8-core GPU, 10-core GPU. Hardware-accelerated ray tracing."
+    },
+    {
+      "title": "Amazon.com: Apple 2024 MacBook Air 13-inch Laptop with M3 chip ...",
+      "link": "https://www.amazon.com/Apple-2024-MacBook-13-inch-Laptop/dp/B0DLHY19N3",
+      "source": "www.amazon.com",
+      "snippet": "The M3 chip brings even greater capabilities to the superportable 13-inch MacBook Air. With up to 18 hours of battery life, you can take it anywhere and blaze ..."
+    }
+  ],
+  "sentiment_overview": {
+    "positive": 2,
+    "neutral": 7,
+    "negative": 1
+  },
+  "key_phrases": [],
+  "recent_news": [
+    {
+      "title": "Looking to upgrade your old laptop? Why I recommend the MacBook Air at this price",
+      "link": "https://www.zdnet.com/article/looking-to-upgrade-your-old-laptop-why-i-recommend-the-macbook-air-at-this-price/",
+      "source": "ZDNET",
+      "date": "6 hours ago",
+      "snippet": "The M3 MacBook Air is no longer the latest and greatest laptop, but multiple configurations have been discounted at Amazon."
+    },
+    {
+      "title": "These are the best new MacBook deals right now: options as low as $649",
+      "link": "https://9to5mac.com/2025/05/04/best-macbook-deals-may-2025/",
+      "source": "9to5Mac",
+      "date": "1 day ago",
+      "snippet": "In the Apple Silicon era, MacBooks have become more affordable than ever \u2013 with brand new models starting as low as $649."
+    },
+    {
+      "title": "I tested Apple\u2019s M4 MacBook Air, the best boring laptop I\u2019ve ever used",
+      "link": "https://www.cnn.com/cnn-underscored/reviews/macbook-air-m4",
+      "source": "CNN",
+      "date": "1 month ago",
+      "snippet": "Apple's latest iterative update to the MacBook Air gets better with the M4 chip, even though it doesn't spark joy with any innovation."
+    },
+    {
+      "title": "MacBook Air M4 live updates \u2014 the new MacBook is official",
+      "link": "https://www.tomsguide.com/news/live/apple-something-in-the-air-live-updates",
+      "source": "Tom's Guide",
+      "date": "2 months ago",
+      "snippet": "Apple's Tim Cook teased \"Something in the air,\" and now the first of those \"somethings\" has revealed itself as a new iPad Air with an M3..."
+    },
+    {
+      "title": "New MacBook Air M4 launch live updates \u2013 laptop officially lands alongside new Mac Studio",
+      "link": "https://www.techradar.com/news/live/apple-mackbook-air-m4-launch",
+      "source": "TechRadar",
+      "date": "2 months ago",
+      "snippet": "Apple CEO Tim Cook channeled his inner Phil Collins this week by posting \"There's something in the Air\" as a teaser. Yesterday we saw the..."
+    }
+  ]
+}

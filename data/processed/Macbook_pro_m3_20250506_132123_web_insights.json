@@ -1,0 +1,77 @@
+{
+  "top_sources": [
+    {
+      "title": "Buy MacBook Pro - Apple",
+      "link": "https://www.apple.com/shop/buy-mac/macbook-pro",
+      "source": "www.apple.com",
+      "snippet": "Discover the MacBook Pro laptop with the M4 family of chips, built for Apple Intelligence. Get credit when you trade in an eligible Mac. Buy now."
+    },
+    {
+      "title": "MacBook Pro 14\" Laptop - M3 chip Built for Apple Intelligence - 8GB ...",
+      "link": "https://www.bestbuy.com/site/apple-macbook-pro-14-laptop-m3-chip-built-for-apple-intelligence-8gb-memory-10-core-gpu-512gb-ssd-space-gray/6534641.p?skuId=6534641",
+      "source": "www.bestbuy.com",
+      "snippet": "The MacBook Pro with the M3 chip, 8GB RAM, and 512GB storage in silver is a powerhouse for professionals. Its sleek design and stunning Retina display make it a ..."
+    },
+    {
+      "title": "M3 MacBook Pro: 1 Year Later : r/macbookpro - Reddit",
+      "link": "https://www.reddit.com/r/macbookpro/comments/1gl1mu1/m3_macbook_pro_1_year_later/",
+      "source": "www.reddit.com",
+      "snippet": "The M3 MacBook Pro offers significant improvements over Intel-based Macs, including a better keyboard, speakers, and webcam. For most users, the ..."
+    },
+    {
+      "title": "Compare Mac models - Apple",
+      "link": "https://www.apple.com/mac/compare/?modelList=MacBook-Pro-14-M3,MacBook-Pro-14-M3x,MacBook-Pro-16-M3",
+      "source": "www.apple.com",
+      "snippet": "M3 Pro chip Up to 12-core CPU with 6 performance cores and 6 efficiency cores Up to 18-core GPU Hardware-accelerated ray tracing 16-core Neural Engine 150GB/s ..."
+    },
+    {
+      "title": "MacBook Pro - Tech Specs - Apple",
+      "link": "https://www.apple.com/macbook-pro/specs/",
+      "source": "www.apple.com",
+      "snippet": "MacBook Pro Technical Specifications \u00b7 Up to 22 hours video streaming \u00b7 Up to 14 hours wireless web \u00b7 72.4-watt-hour lithium-polymer battery \u00b7 70W USB-C Power ..."
+    }
+  ],
+  "sentiment_overview": {
+    "positive": 5,
+    "neutral": 5,
+    "negative": 0
+  },
+  "key_phrases": [],
+  "recent_news": [
+    {
+      "title": "Looking to upgrade your old laptop? Why I recommend the MacBook Air at this price",
+      "link": "https://www.zdnet.com/article/looking-to-upgrade-your-old-laptop-why-i-recommend-the-macbook-air-at-this-price/",
+      "source": "ZDNET",
+      "date": "6 hours ago",
+      "snippet": "The M3 MacBook Air is no longer the latest and greatest laptop, but multiple configurations have been discounted at Amazon."
+    },
+    {
+      "title": "These are the best new MacBook deals right now: options as low as $649",
+      "link": "https://9to5mac.com/2025/05/04/best-macbook-deals-may-2025/",
+      "source": "9to5Mac",
+      "date": "1 day ago",
+      "snippet": "In the Apple Silicon era, MacBooks have become more affordable than ever \u2013 with brand new models starting as low as $649."
+    },
+    {
+      "title": "Save $900 USD on the Apple 14\u2033 MacBook Pro M3 Pro",
+      "link": "https://www.newsshooter.com/2025/04/29/save-900-usd-on-the-apple-14-macbook-pro-m3-pro/",
+      "source": "Newsshooter",
+      "date": "6 days ago",
+      "snippet": "You can save $900 USD on the Apple 14\" MacBook Pro M3 Pro with 8GB Unified RAM, 1TB SSD, or the Apple 14\" MacBook Pro M3 Pro with 36GB..."
+    },
+    {
+      "title": "M4 Max and M3 Ultra Mac Studio Review: A weird update, but it mostly works",
+      "link": "https://arstechnica.com/gadgets/2025/03/m4-max-and-m3-ultra-mac-studio-review-a-weird-update-but-it-mostly-works/",
+      "source": "Ars Technica",
+      "date": "1 month ago",
+      "snippet": "M3 Ultra has benefits, but sometimes you're paying more for worse performance."
+    },
+    {
+      "title": "Best MacBooks of 2025: Which MacBook should you buy?",
+      "link": "https://mashable.com/roundup/the-best-macbooks",
+      "source": "Mashable",
+      "date": "1 week ago",
+      "snippet": "These are the best MacBooks you can get in 2025, whether it's the current generation or an older gen model."
+    }
+  ]
+}

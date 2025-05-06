@@ -1,0 +1,150 @@
+{
+  "timestamp": "2025-05-06T13:06:20.851541",
+  "summary": {
+    "total_products": 243,
+    "average_price": 1375.3722633744856,
+    "average_rating": 2.154320987654321,
+    "total_reviews": 0
+  },
+  "price_analysis": {
+    "min": 0.0,
+    "max": 5540.89,
+    "mean": 1375.3722633744856,
+    "median": 1622.79,
+    "std_dev": 1180.1422269476764,
+    "price_ranges": {
+      "ranges": [
+        "<$25",
+        "$25-$50",
+        "$50-$100",
+        "$100-$200",
+        "$200-$500",
+        "$500-$1000",
+        ">$1000"
+      ],
+      "counts": [
+        0,
+        3,
+        0,
+        0,
+        0,
+        25,
+        145
+      ]
+    }
+  },
+  "rating_analysis": {
+    "min": 0.0,
+    "max": 5.0,
+    "mean": 2.154320987654321,
+    "median": 0.0,
+    "std_dev": 2.309165141042815,
+    "distribution": {
+      "ratings": [
+        0.0,
+        1.0,
+        2.5,
+        4.0,
+        4.5,
+        5.0
+      ],
+      "counts": [
+        125,
+        5,
+        5,
+        5,
+        48,
+        55
+      ]
+    }
+  },
+  "review_analysis": {
+    "min": 0,
+    "max": 0,
+    "mean": 0.0,
+    "median": 0.0,
+    "std_dev": 0.0,
+    "total": 0,
+    "distribution": {
+      "ranges": [
+        "0-10"
+      ],
+      "counts": [
+        0
+      ]
+    }
+  },
+  "title_analysis": {
+    "top_words": [
+      {
+        "inch": 30
+      },
+      {
+        "apple": 15
+      },
+      {
+        "macbook": 15
+      },
+      {
+        "air": 15
+      },
+      {
+        "laptop": 15
+      },
+      {
+        "chip": 15
+      },
+      {
+        "liquid": 15
+      },
+      {
+        "retina": 15
+      },
+      {
+        "display": 15
+      },
+      {
+        "unified": 15
+      },
+      {
+        "memory": 15
+      },
+      {
+        "ssd": 15
+      },
+      {
+        "storage": 15
+      },
+      {
+        "backlit": 15
+      },
+      {
+        "keyboard": 15
+      },
+      {
+        "facetime": 15
+      },
+      {
+        "camera": 15
+      },
+      {
+        "touch": 15
+      },
+      {
+        "starlight": 5
+      },
+      {
+        "midnight": 5
+      }
+    ],
+    "average_sentiment": 0.0,
+    "positive_titles": 0,
+    "neutral_titles": 15,
+    "negative_titles": 0
+  },
+  "correlations": {
+    "price_vs_rating": 0.1997441908623159,
+    "price_vs_reviews": NaN,
+    "rating_vs_reviews": NaN
+  }
+}

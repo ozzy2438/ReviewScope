@@ -81,6 +81,9 @@
                 </p>
             </div>
             <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+                <a href="{{ url_for('web_insights', job_id=job_id) }}" class="btn btn-info me-2">
+                    <i class="fas fa-globe me-2"></i>Web Insights
+                </a>
                 <a href="{{ url_for('index') }}" class="btn btn-outline-light me-2">
                     <i class="fas fa-home me-2"></i>Ana Sayfa
                 </a>
@@ -295,7 +298,7 @@
                 <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Automatic Insights</h5>
             </div>
             <div class="card-body">
-                <div class="alert alert-info mb-0">
+                <div class="alert alert-info mb-3">
                     <div class="d-flex">
                         <div class="flex-shrink-0">
                             <i class="fas fa-robot fa-2x me-3"></i>
@@ -308,6 +311,28 @@
                                 <li>Highly rated products generally have {{ "more" if dashboard_data.summary.average_price > 500 else "less" }} reviews.</li>
                                 <li>This category has an average rating of {{ "%.1f"|format(dashboard_data.summary.average_rating) }} compared to other electronics categories.</li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-success mb-0">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-globe fa-2x me-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="alert-heading">Web Insights Available</h5>
+                            <p>Enhance your product analysis with web sentiment, news, and reviews from across the internet:</p>
+                            <ul class="mb-0">
+                                <li>Compare Amazon ratings with general web sentiment</li>
+                                <li>Discover latest news articles about this product</li>
+                                <li>Find reviews and discussions from various websites</li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="{{ url_for('web_insights', job_id=job_id) }}" class="btn btn-success">
+                                    <i class="fas fa-globe me-2"></i>View Web Insights
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
