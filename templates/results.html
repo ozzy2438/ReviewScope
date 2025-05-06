@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block title %}Amazon Scraper - Results{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-chart-line me-2"></i>Processing Results: "{{ job_info.search_term }}"
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 id="status-message">
+                            {% if job_info.status == 'running' %}
+                                Initializing...
+                            {% elif job_info.status == 'scraping' %}
+                                Scraping data from Amazon...
+                            {% elif job_info.status == 'analyzing' %}
+                                Analyzing product data...
+                            {% elif job_info.status == 'completed' %}
+                                Analysis completed!
+                            {% elif job_info.status == 'failed' %}
+                                Process failed
+                            {% endif %}
+                        </h5>
+                        <span class="badge bg-{{ 
+                            'primary' if job_info.status == 'running' else
+                            'info' if job_info.status == 'scraping' else
+                            'warning' if job_info.status == 'analyzing' else
+                            'success' if job_info.status == 'completed' else
+                            'danger'
+                        }}" id="status-badge">
+                            {{ job_info.status.upper() }}
+                        </span>
+                    </div>
+                    
+                    <div class="progress" style="height: 25px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                             role="progressbar" style="width: {{ job_info.progress }}%;" 
+                             aria-valuenow="{{ job_info.progress }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ job_info.progress }}%
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="completed-actions" class="text-center mt-4" style="{{ 'display:none;' if job_info.status != 'completed' else '' }}">
+                    <p class="lead">Analysis is complete! You can now view the detailed dashboard.</p>
+                    <a href="{{ url_for('dashboard', job_id=job_id) }}" class="btn btn-success btn-lg">
+                        <i class="fas fa-chart-bar me-2"></i>View Dashboard
+                    </a>
+                </div>
+                
+                <div id="error-message" class="alert alert-danger mt-4" style="{{ 'display:none;' if job_info.status != 'failed' else '' }}">
+                    <h5><i class="fas fa-exclamation-circle me-2"></i>Error Occurred</h5>
+                    <p>{{ job_info.error if job_info.status == 'failed' else '' }}</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-danger">
+                        <i class="fas fa-redo me-2"></i>Try Again
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        function updateJobStatus() {
+            $.getJSON("{{ url_for('get_job_status', job_id=job_id) }}", function(data) {
+                // Update progress bar
+                $("#progress-bar").css("width", data.progress + "%");
+                $("#progress-bar").attr("aria-valuenow", data.progress);
+                $("#progress-bar").text(data.progress + "%");
+                
+                // Update status message and badge
+                let statusMessage = "";
+                let badgeClass = "";
+                
+                if (data.status === "running") {
+                    statusMessage = "Initializing...";
+                    badgeClass = "bg-primary";
+                } else if (data.status === "scraping") {
+                    statusMessage = "Scraping data from Amazon...";
+                    badgeClass = "bg-info";
+                } else if (data.status === "analyzing") {
+                    statusMessage = "Analyzing product data...";
+                    badgeClass = "bg-warning";
+                } else if (data.status === "completed") {
+                    statusMessage = "Analysis completed!";
+                    badgeClass = "bg-success";
+                    $("#completed-actions").show();
+                    clearInterval(statusTimer); // Stop checking
+                    
+                    // Otomatik olarak dashboard'a yönlendir
+                    if (data.dashboard_url) {
+                        // Eğer tam URL değilse, mevcut domain ile birleştir
+                        if (data.dashboard_url.startsWith('/')) {
+                            window.location.href = window.location.origin + data.dashboard_url;
+                        } else {
+                            window.location.href = data.dashboard_url;
+                        }
+                    } else {
+                        window.location.href = "{{ url_for('dashboard', job_id=job_id) }}";
+                    }
+                } else if (data.status === "failed") {
+                    statusMessage = "Process failed";
+                    badgeClass = "bg-danger";
+                    $("#error-message").text(data.error || "An unknown error occurred");
+                    $("#error-message").show();
+                    clearInterval(statusTimer); // Stop checking
+                }
+                
+                $("#status-message").text(statusMessage);
+                $("#status-badge").attr("class", badgeClass).text(data.status.toUpperCase());
+            });
+        }
+        
+        // Check status every 2 seconds
+        let statusTimer = setInterval(updateJobStatus, 2000);
+        
+        // Initial status check
+        updateJobStatus();
+    });
+</script>
+{% endblock %}

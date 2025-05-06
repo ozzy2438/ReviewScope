@@ -1,0 +1,439 @@
+{% extends "layout.html" %}
+
+{% block title %}Analiz Gösterge Paneli{% endblock %}
+
+{% block head %}
+<style>
+    .dashboard-summary .card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .dashboard-summary .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .summary-icon {
+        font-size: 2rem;
+        opacity: 0.8;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 350px;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        background-color: white;
+    }
+    
+    .dashboard-header {
+        position: relative;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .actions-bar {
+        border-radius: 0.5rem;
+        background-color: white;
+    }
+    
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    
+    .stat-label {
+        font-size: 1rem;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+    
+    .chart-card {
+        height: 100%;
+        transition: all 0.3s;
+    }
+    
+    .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="dashboard-header text-white shadow">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-2"><i class="fas fa-chart-line me-3"></i>{{ job_info.search_term }}</h1>
+                <p class="lead mb-0">
+                    <i class="far fa-calendar-alt me-2"></i>{{ job_info.date_created|default('Tarih Bilgisi Yok', true) }}
+                    <span class="mx-2">|</span>
+                    <i class="fas fa-file-alt me-2"></i>{{ job_info.num_pages }} Sayfa Tarandı
+                </p>
+            </div>
+            <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+                <a href="{{ url_for('index') }}" class="btn btn-outline-light me-2">
+                    <i class="fas fa-home me-2"></i>Ana Sayfa
+                </a>
+                <a href="#" class="btn btn-light" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Yazdır
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions Bar -->
+<div class="actions-bar mb-4 p-3 shadow-sm">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Veri Filtreleme</h5>
+        </div>
+        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-sm btn-outline-primary active">
+                    <i class="fas fa-th-large me-1"></i>Tümü
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-dollar-sign me-1"></i>Fiyat
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-star me-1"></i>Değerlendirme
+                </button>
+            </div>
+            <div class="btn-group ms-2" role="group">
+                <button type="button" class="btn btn-sm btn-outline-secondary active">
+                    <i class="fas fa-chart-bar me-1"></i>Grafikler
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-table me-1"></i>Tablo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Summary Cards -->
+<div class="row dashboard-summary mb-4">
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card h-100 dashboard-card bg-primary bg-gradient text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-4 text-center">
+                        <i class="fas fa-box-open summary-icon"></i>
+                    </div>
+                    <div class="col-8">
+                        <div class="stat-label mb-1">Toplam Ürün</div>
+                        <div class="stat-value">{{ dashboard_data.summary.total_products }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card h-100 dashboard-card bg-success bg-gradient text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-4 text-center">
+                        <i class="fas fa-dollar-sign summary-icon"></i>
+                    </div>
+                    <div class="col-8">
+                        <div class="stat-label mb-1">Ortalama Fiyat</div>
+                        <div class="stat-value">${{ "%.2f"|format(dashboard_data.summary.average_price) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card h-100 dashboard-card bg-warning bg-gradient text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-4 text-center">
+                        <i class="fas fa-star summary-icon"></i>
+                    </div>
+                    <div class="col-8">
+                        <div class="stat-label mb-1">Ortalama Puan</div>
+                        <div class="stat-value">{{ "%.1f"|format(dashboard_data.summary.average_rating) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card h-100 dashboard-card bg-info bg-gradient text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-4 text-center">
+                        <i class="fas fa-comments summary-icon"></i>
+                    </div>
+                    <div class="col-8">
+                        <div class="stat-label mb-1">Toplam Yorum</div>
+                        <div class="stat-value">{{ dashboard_data.summary.total_reviews|int }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow chart-card">
+            <div class="card-header bg-success bg-gradient text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Fiyat Dağılımı</h5>
+                    <button class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="Daha detaylı analiz için tıklayın">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="price-chart" class="chart-container"></div>
+            </div>
+            <div class="card-footer bg-light p-3">
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Ürünlerin fiyat aralıklarına göre dağılımı</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow chart-card">
+            <div class="card-header bg-primary bg-gradient text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-star me-2"></i>Değerlendirme Dağılımı</h5>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Daha detaylı analiz için tıklayın">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="rating-chart" class="chart-container"></div>
+            </div>
+            <div class="card-footer bg-light p-3">
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Ürünlerin yıldız puanlarına göre dağılımı</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow chart-card">
+            <div class="card-header bg-warning bg-gradient text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-comments me-2"></i>Yorum Dağılımı</h5>
+                    <button class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Daha detaylı analiz için tıklayın">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="review-chart" class="chart-container"></div>
+            </div>
+            <div class="card-footer bg-light p-3">
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Ürünlerin yorum sayılarına göre dağılımı</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow chart-card">
+            <div class="card-header bg-info bg-gradient text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-link me-2"></i>Korelasyonlar</h5>
+                    <button class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Daha detaylı analiz için tıklayın">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="correlation-chart" class="chart-container"></div>
+            </div>
+            <div class="card-footer bg-light p-3">
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Fiyat, puan ve yorum sayısı arasındaki ilişkiler</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Word Cloud Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow chart-card">
+            <div class="card-header bg-dark bg-gradient text-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-cloud me-2"></i>Ürün Başlıklarında Sık Kullanılan Kelimeler</h5>
+                    <button class="btn btn-sm btn-dark" data-bs-toggle="tooltip" title="Daha detaylı analiz için tıklayın">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="word-cloud" style="height: 400px; width: 100%;"></div>
+            </div>
+            <div class="card-footer bg-light p-3">
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Ürün başlıklarında en sık geçen kelimeler (büyüklük kullanım sıklığını gösterir)</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Insight Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-secondary bg-gradient text-white">
+                <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Otomatik Öngörüler</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-0">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-robot fa-2x me-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="alert-heading">Veri Analizi Sonuçları</h5>
+                            <p>Bu ürün kategorisi için örnek öngörüler:</p>
+                            <ul class="mb-0">
+                                <li>En popüler ürünler {{ "$1000" if dashboard_data.summary.average_price > 500 else "$25-$50" }} fiyat aralığındadır.</li>
+                                <li>Yüksek değerlendirmeli ürünler genellikle {{ "daha yüksek" if dashboard_data.summary.average_price > 500 else "daha düşük" }} sayıda yoruma sahiptir.</li>
+                                <li>Bu kategoride ortalama puan {{ "%.1f"|format(dashboard_data.summary.average_rating) }} ile pazardaki diğer elektronik kategorilerine göre {{ "daha yüksek" if dashboard_data.summary.average_rating > 4.0 else "ortalama" }} seviyededir.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Enable tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Price Chart with improved styling
+        const priceChart = JSON.parse('{{ dashboard_data.price_chart|safe }}');
+        priceChart.layout.margin = {l:50, r:30, t:30, b:80};
+        priceChart.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+        priceChart.layout.plot_bgcolor = 'rgba(0,0,0,0)';
+        priceChart.layout.font = {family: 'Poppins, sans-serif'};
+        priceChart.layout.xaxis = {...priceChart.layout.xaxis, tickangle: -45};
+        priceChart.data[0].marker = {color: '#28a745', opacity: 0.8};
+        Plotly.newPlot('price-chart', priceChart.data, priceChart.layout, {responsive: true});
+        
+        // Rating Chart with improved styling
+        const ratingChart = JSON.parse('{{ dashboard_data.rating_chart|safe }}');
+        ratingChart.layout.margin = {l:50, r:30, t:30, b:50};
+        ratingChart.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+        ratingChart.layout.plot_bgcolor = 'rgba(0,0,0,0)';
+        ratingChart.layout.font = {family: 'Poppins, sans-serif'};
+        ratingChart.data[0].marker = {color: '#0d6efd', opacity: 0.8};
+        Plotly.newPlot('rating-chart', ratingChart.data, ratingChart.layout, {responsive: true});
+        
+        // Review Chart with improved styling
+        const reviewChart = JSON.parse('{{ dashboard_data.review_chart|safe }}');
+        reviewChart.layout.margin = {l:50, r:30, t:30, b:50};
+        reviewChart.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+        reviewChart.layout.plot_bgcolor = 'rgba(0,0,0,0)';
+        reviewChart.layout.font = {family: 'Poppins, sans-serif'};
+        reviewChart.data[0].marker = {color: '#ffc107', opacity: 0.8};
+        Plotly.newPlot('review-chart', reviewChart.data, reviewChart.layout, {responsive: true});
+        
+        // Correlation Chart with improved styling
+        const correlationChart = JSON.parse('{{ dashboard_data.correlation_chart|safe }}');
+        correlationChart.layout.margin = {l:50, r:30, t:30, b:50};
+        correlationChart.layout.paper_bgcolor = 'rgba(0,0,0,0)';
+        correlationChart.layout.plot_bgcolor = 'rgba(0,0,0,0)';
+        correlationChart.layout.font = {family: 'Poppins, sans-serif'};
+        Plotly.newPlot('correlation-chart', correlationChart.data, correlationChart.layout, {responsive: true});
+        
+        // Enhanced Word Cloud
+        const wordCloudData = {{ dashboard_data.word_cloud_data|tojson }};
+        const width = document.getElementById('word-cloud').offsetWidth;
+        const height = 400;
+        
+        // Create better color scale
+        const colors = d3.scaleLinear()
+            .domain([0, 5, 10, 15, 20])
+            .range(['#17a2b8', '#28a745', '#ffc107', '#fd7e14', '#dc3545']);
+        
+        const layout = d3.layout.cloud()
+            .size([width, height])
+            .words(wordCloudData)
+            .padding(5)
+            .rotate(function() { return ~~(Math.random() * 2) * 45; })
+            .font("'Poppins', sans-serif")
+            .fontSize(function(d) { return Math.sqrt(d.value) * 5 + 10; })
+            .on("end", draw);
+            
+        layout.start();
+        
+        function draw(words) {
+            d3.select("#word-cloud").append("svg")
+                .attr("width", layout.size()[0])
+                .attr("height", layout.size()[1])
+                .append("g")
+                .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", "'Poppins', sans-serif")
+                .style("font-weight", function(d) { return d.value > 10 ? "bold" : "normal"; })
+                .style("fill", function(d) { return colors(d.value); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; })
+                .on("mouseover", function() {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("font-size", function(d) { return (d.size * 1.2) + "px"; });
+                })
+                .on("mouseout", function() {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("font-size", function(d) { return d.size + "px"; });
+                });
+        }
+        
+        // Add responsiveness to charts
+        window.addEventListener('resize', function() {
+            Plotly.relayout('price-chart', {
+                width: document.getElementById('price-chart').offsetWidth,
+                height: document.getElementById('price-chart').offsetHeight
+            });
+            Plotly.relayout('rating-chart', {
+                width: document.getElementById('rating-chart').offsetWidth,
+                height: document.getElementById('rating-chart').offsetHeight
+            });
+            Plotly.relayout('review-chart', {
+                width: document.getElementById('review-chart').offsetWidth,
+                height: document.getElementById('review-chart').offsetHeight
+            });
+            Plotly.relayout('correlation-chart', {
+                width: document.getElementById('correlation-chart').offsetWidth,
+                height: document.getElementById('correlation-chart').offsetHeight
+            });
+        });
+    });
+</script>
+{% endblock %}
